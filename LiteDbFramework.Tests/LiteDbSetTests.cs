@@ -3,6 +3,7 @@ using LiteDB;
 using System;
 using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace LiteDbFramework.Tests;
 
@@ -17,7 +18,7 @@ public class LiteDbSetTests
 
     private class DbContext(string connectionString) : LiteDbContext(connectionString, ConfigureModel)
     {
-        public LiteDbSet<Person> People { get; private set; }
+        public LiteDbSet<Person> People { get; [UsedImplicitly] private set; }
 
         private static void ConfigureModel(ModelBuilder modelBuilder)
         {

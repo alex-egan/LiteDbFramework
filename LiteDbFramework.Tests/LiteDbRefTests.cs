@@ -2,6 +2,7 @@ using Xunit;
 using LiteDB;
 using System;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace LiteDbFramework.Tests;
 
@@ -25,8 +26,8 @@ public class LiteDbRefTests
 
     private class DbContext(string connectionString) : LiteDbContext(connectionString, ConfigureModel)
     {
-        public LiteDbSet<Parent> Parents { get; private set; }
-        public LiteDbSet<Child> Children { get; private set; }
+        public LiteDbSet<Parent> Parents { get; [UsedImplicitly] private set; }
+        public LiteDbSet<Child> Children { get; [UsedImplicitly] private set; }
 
         private static void ConfigureModel(ModelBuilder modelBuilder)
         {

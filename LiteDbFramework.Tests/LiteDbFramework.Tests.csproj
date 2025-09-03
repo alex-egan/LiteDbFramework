@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LiteDbFramework\LiteDbFramework.csproj" />
+    <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
     <PackageReference Include="LiteDB" Version="5.0.21" />
     <PackageReference Include="xunit" Version="2.9.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.0">
