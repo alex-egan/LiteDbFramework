@@ -1,17 +1,10 @@
 namespace LiteDbFramework;
 
-public class ModelBuilder
+public class ModelBuilder(LiteDatabase db)
 {
-    private readonly LiteDatabase _db;
-
-    public ModelBuilder(LiteDatabase db)
-    {
-        _db = db;
-    }
-
     public void Entity<T>(Action<ILiteCollection<T>> configure) where T : class
     {
-        ILiteCollection<T> collection = _db.GetCollection<T>(typeof(T).Name);
+        ILiteCollection<T> collection = db.GetCollection<T>(typeof(T).Name);
         configure(collection);
     }
 }

@@ -10,6 +10,7 @@
     <Company>YourCompany</Company>
     <Description>A lightweight Entity Framework-like wrapper for LiteDB with DbContext, DbSet, Unit of Work, and Repository patterns.</Description>
     <PackageTags>LiteDB ORM DbContext EntityFramework</PackageTags>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

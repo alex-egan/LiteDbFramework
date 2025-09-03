@@ -8,7 +8,7 @@ public abstract class LiteDbContext : IDisposable
     {
         _db = new LiteDatabase(connectionString);
         ModelBuilder modelBuilder = new(_db);
-        configureModel?.Invoke(modelBuilder);
+        configureModel(modelBuilder);
         InitializeDbSets();
     }
 
@@ -23,7 +23,7 @@ public abstract class LiteDbContext : IDisposable
         {
             Type entityType = prop.PropertyType.GetGenericArguments()[0];
 
-            object dbSet = Activator.CreateInstance(
+            object? dbSet = Activator.CreateInstance(
                 typeof(LiteDbSet<>).MakeGenericType(entityType),
                 _db);
 
@@ -33,6 +33,7 @@ public abstract class LiteDbContext : IDisposable
 
     public void Dispose()
     {
-        _db?.Dispose();
+        _db.Dispose();
+        GC.SuppressFinalize(this);
     }
 }
