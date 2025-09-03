@@ -57,13 +57,13 @@ namespace LiteDbFramework.Tests
         }
 
         [Fact]
-        public void CanFindAllOrders()
+        public void CanFindAll()
         {
             var path = Path.GetTempFileName();
             using var context = new RefContext(path);
 
-            context.Parents.Insert(new Parent { Name = "Order 1" });
-            context.Parents.Insert(new Parent { Name = "Order 2" });
+            context.Parents.Insert(new Parent { Name = "Parent 1" });
+            context.Parents.Insert(new Parent { Name = "Parent 2" });
 
             var results = context.Parents.FindAll();
 
