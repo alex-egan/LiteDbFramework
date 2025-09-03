@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace LiteDbFramework.Tests;
 
-public class LiteDbRefTests
+public class LiteDbReferenceSetTests
 {
     public class Parent
     {
