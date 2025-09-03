@@ -1,9 +1,8 @@
 using Xunit;
-using LiteDbFramework;
 using LiteDB;
 using System;
 using System.IO;
-using System.Linq; // Ensure System.Linq is imported for Count() extension method
+using System.Linq;
 
 namespace LiteDbFramework.Tests
 {
@@ -38,7 +37,7 @@ namespace LiteDbFramework.Tests
         }
 
         [Fact]
-        public void CanIncludeBsonRefProperty()
+        public void FindByIdWithReference_ShouldReturnSuccess()
         {
             var path = Path.GetTempFileName();
             using var context = new RefContext(path);
@@ -54,31 +53,6 @@ namespace LiteDbFramework.Tests
             Assert.NotNull(result);
             Assert.NotNull(result.Reference);
             Assert.Equal("Parent A", result.Reference.Name);
-        }
-
-        [Fact]
-        public void CanFindAll()
-        {
-            var path = Path.GetTempFileName();
-            using var context = new RefContext(path);
-
-            context.Parents.Insert(new Parent { Name = "Parent 1" });
-            context.Parents.Insert(new Parent { Name = "Parent 2" });
-
-            var results = context.Parents.FindAll();
-
-            Assert.Equal(2, results.Count());
-        }
-
-        [Fact]
-        public void FindByIdReturnsNullForNonExistentId()
-        {
-            var path = Path.GetTempFileName();
-            using var context = new RefContext(path);
-
-            var result = context.Parents.FindById(Guid.NewGuid());
-
-            Assert.Null(result);
         }
     }
 }

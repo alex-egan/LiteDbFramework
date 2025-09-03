@@ -1,19 +1,14 @@
 using Xunit;
-using LiteDbFramework;
-using LiteDB;
 using System.IO;
 
 namespace LiteDbFramework.Tests
 {
     public class LiteDbContextTests
     {
-        private class TestContext : LiteDbContext
-        {
-            public TestContext(string path) : base(path, builder => { }) { }
-        }
+        private class TestContext(string path) : LiteDbContext(path, _ => { });
 
         [Fact]
-        public void CanInitializeContext()
+        public void InitializeContext_ValidInput_ShouldReturnSuccess()
         {
             var path = Path.GetTempFileName();
             using var context = new TestContext(path);
