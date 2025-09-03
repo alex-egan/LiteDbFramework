@@ -6,23 +6,23 @@ public class LiteDbReferenceSetTests
     {
         [BsonId]
         [UsedImplicitly]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
     }
 
     public class Child
     {
         [BsonId]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; }
 
-        [BsonRef("Parent")]
+        [BsonRef]
         public Parent ParentReference { get; set; }
     }
 
     public class Building
     {
         [BsonId]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; }
         public string Name { get; set; }
         [BsonRef]
         public List<Room> Rooms { get; set; } = [];
@@ -32,7 +32,7 @@ public class LiteDbReferenceSetTests
     {
         [BsonId]
         [UsedImplicitly]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; }
         public string Number { get; set; }
     }
 

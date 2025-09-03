@@ -5,7 +5,7 @@ public class LiteDbSetTests
     public class Person
     {
         [BsonId]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
     }
 
