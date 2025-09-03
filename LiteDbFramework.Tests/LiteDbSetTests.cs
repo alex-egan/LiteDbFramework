@@ -81,11 +81,9 @@ namespace LiteDbFramework.Tests
             var path = Path.GetTempFileName();
             using var context = new DbContext(path);
 
-            // Insert a new entity
             var parent = new Person { Name = "Person A" };
             context.People.Upsert(parent);
 
-            // Verify the entity was inserted
             var insertedPerson = context.People.FindById(parent.Id);
             Assert.NotNull(insertedPerson);
             Assert.Equal("Person A", insertedPerson.Name);
@@ -97,15 +95,12 @@ namespace LiteDbFramework.Tests
             var path = Path.GetTempFileName();
             using var context = new DbContext(path);
 
-            // Insert a new entity
             var parent = new Person { Name = "Person A" };
             context.People.Upsert(parent);
 
-            // Update the existing entity
             parent.Name = "Updated Person A";
             context.People.Upsert(parent);
 
-            // Verify the entity was updated
             var updatedPerson = context.People.FindById(parent.Id);
             Assert.NotNull(updatedPerson);
             Assert.Equal("Updated Person A", updatedPerson.Name);
@@ -132,22 +127,19 @@ namespace LiteDbFramework.Tests
             var person = new Person();
             using (var db = new LiteDatabase(path))
             {
-                // Use standard LiteDB commands to insert a record
                 var people = db.GetCollection<Person>("Person");
                 person = new Person { Name = "Person A" };
                 people.Insert(person);
             }
 
-            // Use the project's FindById method to retrieve the record
             using var context = new DbContext(path);
             var retrievedParent = context.People.FindById(person.Id);
 
-            // Verify the retrieved entity
             Assert.NotNull(retrievedParent);
             Assert.Equal(person.Id, retrievedParent.Id);
             Assert.Equal("Person A", retrievedParent.Name);
         }
-        
+
         [Fact]
         public void FindById_WithNonExistentId_ShouldReturnNull()
         {
