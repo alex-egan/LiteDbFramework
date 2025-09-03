@@ -95,6 +95,35 @@ public class LiteDbReferenceSetTests
     }
 
     [Fact]
+    public void FindAllWithReference_ShouldReturnSuccess()
+    {
+        var path = Path.GetTempFileName();
+        var parent1 = new Parent { Name = "Parent 1" };
+        var child1 = new Child { ParentReference = parent1 };
+        var parent2 = new Parent { Name = "Parent 2" };
+        var child2 = new Child { ParentReference = parent2 };
+
+        using (var liteDb = new LiteDatabase(path))
+        {
+            var parents = liteDb.GetCollection<Parent>("Parent");
+            var children = liteDb.GetCollection<Child>("Child");
+            parents.Insert(parent1);
+            children.Insert(child1);
+            parents.Insert(parent2);
+            children.Insert(child2);
+        }
+
+        using var context = new DbContext(path);
+        var result = context.Children.WithReferences.FindAll().ToList();
+
+        Assert.NotNull(result);
+        Assert.Equal(2, result.Count);
+        List<string> expectedNames = [parent1.Name, parent2.Name];
+        List<string> actualNames = result.ConvertAll(r => r.ParentReference.Name);
+        Assert.True(expectedNames.Order().SequenceEqual(actualNames.Order()));
+    }
+
+    [Fact]
     public void InsertRecordWithListReference_WithValidInput_ShouldReturnSuccess()
     {
         var path = Path.GetTempFileName();
@@ -103,7 +132,7 @@ public class LiteDbReferenceSetTests
         var building = new Building
         {
             Name = "Building 1",
-            Rooms = [ room1, room2 ]
+            Rooms = [room1, room2]
         };
 
         using (var dbContext = new DbContext(path))
