@@ -1,5 +1,6 @@
 namespace LiteDbFramework;
 
+[PublicAPI]
 public abstract class LiteDbContext : IDisposable
 {
     private readonly LiteDatabase _db;

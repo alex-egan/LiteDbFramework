@@ -1,5 +1,6 @@
 namespace LiteDbFramework;
 
+[PublicAPI]
 public class ModelBuilder(LiteDatabase db)
 {
     public void Entity<T>(Action<ILiteCollection<T>> configure) where T : class

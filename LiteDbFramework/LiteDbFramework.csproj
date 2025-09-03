@@ -1,20 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net6.0;net7.0;net8.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
     <RootNamespace>LiteDbFramework</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>LiteDbFramework</PackageId>
     <Version>1.0.0</Version>
-    <Authors>YourName</Authors>
-    <Company>YourCompany</Company>
-    <Description>A lightweight Entity Framework-like wrapper for LiteDB with DbContext, DbSet, Unit of Work, and Repository patterns.</Description>
-    <PackageTags>LiteDB ORM DbContext EntityFramework</PackageTags>
+    <Authors>Pepperdine University</Authors>
+    <Company>Pepperdine University</Company>
+    <Description>A lightweight Entity Framework-like wrapper for LiteDB.</Description>
+    <PackageTags>LiteDB NoSQL</PackageTags>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LiteDB" Version="5.0.21" />
+    <PackageReference Include="JetBrains.Annotations" Version="2024.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>compile</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="LiteDB" Version="5.0.21" PrivateAssets="all" />
   </ItemGroup>
 
 </Project>

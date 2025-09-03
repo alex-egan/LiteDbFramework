@@ -1,5 +1,6 @@
 namespace LiteDbFramework;
 
+[PublicAPI]
 public class LiteDbSet<T>(LiteDatabase db) where T : class
 {
     private readonly ILiteCollection<T> _collection = db.GetCollection<T>(typeof(T).Name);

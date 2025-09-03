@@ -1,5 +1,6 @@
 ﻿namespace LiteDbFramework;
 
+[PublicAPI]
 public class LiteDbReferenceSet<T>
 {
     private readonly ILiteCollection<T> _collection;
