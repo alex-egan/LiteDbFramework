@@ -17,7 +17,7 @@ public class LiteDbReferenceSet<T>
     /// <param name="refProps">The reference properties to include.</param>
     public LiteDbReferenceSet(ILiteCollection<T> baseCollection, IEnumerable<PropertyInfo> refProps)
     {
-        foreach (var prop in refProps)
+        foreach (PropertyInfo prop in refProps)
         {
             baseCollection = baseCollection.Include($"$.{prop.Name}");
         }

@@ -7,8 +7,8 @@ public class LiteDbContextTests
     [Fact]
     public void InitializeContext_ValidInput_ShouldReturnSuccess()
     {
-        var path = Path.GetTempFileName();
-        using var context = new TestContext(path);
+        string path = Path.GetTempFileName();
+        using TestContext context = new(path);
         Assert.NotNull(context);
     }
 }

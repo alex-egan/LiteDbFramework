@@ -55,18 +55,18 @@ public class LiteDbReferenceSetTests
     [Fact]
     public void InsertRecordWithReference_WithValidInput_ShouldReturnSuccess()
     {
-        var path = Path.GetTempFileName();
-        var parent = new Parent { Name = "Parent 1" };
-        var child = new Child { ParentReference = parent };
+        string path = Path.GetTempFileName();
+        Parent parent = new() { Name = "Parent 1" };
+        Child child = new() { ParentReference = parent };
 
-        using (var dbContext = new DbContext(path))
+        using (DbContext dbContext = new(path))
         {
             dbContext.Parents.Insert(parent);
             dbContext.Children.Insert(child);
         }
 
-        using var liteDb = new LiteDatabase(path);
-        var result = liteDb.GetCollection<Child>("Child").Include(x => x.ParentReference).FindById(child.Id);
+        using LiteDatabase liteDb = new(path);
+        Child result = liteDb.GetCollection<Child>("Child").Include(x => x.ParentReference).FindById(child.Id);
 
         Assert.NotNull(result);
         Assert.NotNull(result.ParentReference);
@@ -76,20 +76,20 @@ public class LiteDbReferenceSetTests
     [Fact]
     public void FindByIdWithReference_ShouldReturnSuccess()
     {
-        var path = Path.GetTempFileName();
-        var parent = new Parent { Name = "Parent 1" };
-        var child = new Child { ParentReference = parent };
+        string path = Path.GetTempFileName();
+        Parent parent = new() { Name = "Parent 1" };
+        Child child = new() { ParentReference = parent };
 
-        using (var liteDb = new LiteDatabase(path))
+        using (LiteDatabase liteDb = new(path))
         {
-            var parents = liteDb.GetCollection<Parent>("Parent");
-            var children = liteDb.GetCollection<Child>("Child");
+            ILiteCollection<Parent> parents = liteDb.GetCollection<Parent>("Parent");
+            ILiteCollection<Child> children = liteDb.GetCollection<Child>("Child");
             parents.Insert(parent);
             children.Insert(child);
         }
 
-        using var context = new DbContext(path);
-        var result = context.Children.WithReferences.FindById(child.Id);
+        using DbContext context = new(path);
+        Child result = context.Children.WithReferences.FindById(child.Id);
 
         Assert.NotNull(result);
         Assert.NotNull(result.ParentReference);
@@ -99,24 +99,24 @@ public class LiteDbReferenceSetTests
     [Fact]
     public void FindAllWithReference_ShouldReturnSuccess()
     {
-        var path = Path.GetTempFileName();
-        var parent1 = new Parent { Name = "Parent 1" };
-        var child1 = new Child { ParentReference = parent1 };
-        var parent2 = new Parent { Name = "Parent 2" };
-        var child2 = new Child { ParentReference = parent2 };
+        string path = Path.GetTempFileName();
+        Parent parent1 = new() { Name = "Parent 1" };
+        Child child1 = new() { ParentReference = parent1 };
+        Parent parent2 = new() { Name = "Parent 2" };
+        Child child2 = new() { ParentReference = parent2 };
 
-        using (var liteDb = new LiteDatabase(path))
+        using (LiteDatabase liteDb = new(path))
         {
-            var parents = liteDb.GetCollection<Parent>("Parent");
-            var children = liteDb.GetCollection<Child>("Child");
+            ILiteCollection<Parent> parents = liteDb.GetCollection<Parent>("Parent");
+            ILiteCollection<Child> children = liteDb.GetCollection<Child>("Child");
             parents.Insert(parent1);
             children.Insert(child1);
             parents.Insert(parent2);
             children.Insert(child2);
         }
 
-        using var context = new DbContext(path);
-        var result = context.Children.WithReferences.FindAll().ToList();
+        using DbContext context = new(path);
+        List<Child> result = context.Children.WithReferences.FindAll().ToList();
 
         Assert.NotNull(result);
         Assert.Equal(2, result.Count);
@@ -128,24 +128,24 @@ public class LiteDbReferenceSetTests
     [Fact]
     public void InsertRecordWithListReference_WithValidInput_ShouldReturnSuccess()
     {
-        var path = Path.GetTempFileName();
-        var room1 = new Room { Number = "101" };
-        var room2 = new Room { Number = "102" };
-        var building = new Building
+        string path = Path.GetTempFileName();
+        Room room1 = new() { Number = "101" };
+        Room room2 = new() { Number = "102" };
+        Building building = new()
         {
             Name = "Building 1",
             Rooms = [room1, room2]
         };
 
-        using (var dbContext = new DbContext(path))
+        using (DbContext dbContext = new(path))
         {
             dbContext.Rooms.Insert(room1);
             dbContext.Rooms.Insert(room2);
             dbContext.Buildings.Insert(building);
         }
 
-        using var liteDb = new LiteDatabase(path);
-        var result = liteDb.GetCollection<Building>("Building").Include(x => x.Rooms).FindById(building.Id);
+        using LiteDatabase liteDb = new(path);
+        Building result = liteDb.GetCollection<Building>("Building").Include(x => x.Rooms).FindById(building.Id);
         Assert.NotNull(result);
         Assert.NotNull(result.Rooms);
         Assert.Equal(2, result.Rooms.Count);
