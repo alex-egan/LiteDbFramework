@@ -1,6 +1,3 @@
-using Xunit;
-using System.IO;
-
 namespace LiteDbFramework.Tests;
 
 public class LiteDbContextTests

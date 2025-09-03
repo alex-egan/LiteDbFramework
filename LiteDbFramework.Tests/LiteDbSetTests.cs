@@ -1,11 +1,4 @@
-﻿using Xunit;
-using LiteDB;
-using System;
-using System.IO;
-using System.Linq;
-using JetBrains.Annotations;
-
-namespace LiteDbFramework.Tests;
+﻿namespace LiteDbFramework.Tests;
 
 public class LiteDbSetTests
 {
