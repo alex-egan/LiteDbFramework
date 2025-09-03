@@ -6,7 +6,7 @@
     <RootNamespace>LiteDbFramework</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>LiteDbFramework</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.0.0-rc</Version>
     <Authors>Pepperdine University</Authors>
     <Company>Pepperdine University</Company>
     <Description>A lightweight Entity Framework-like wrapper for LiteDB.</Description>
