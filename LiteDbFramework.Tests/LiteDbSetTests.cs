@@ -15,7 +15,7 @@ public class LiteDbSetTests
 
         private static void ConfigureModel(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Person>(col => col.EnsureIndex(x => x.Id));
+            modelBuilder.Entity<Person>();
         }
     }
 

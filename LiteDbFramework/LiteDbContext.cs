@@ -1,10 +1,18 @@
 namespace LiteDbFramework;
 
+/// <summary>
+/// Represents the base class for a LiteDB context, providing access to database sets and configuration.
+/// </summary>
 [PublicAPI]
 public abstract class LiteDbContext : IDisposable
 {
     private readonly LiteDatabase _db;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LiteDbContext"/> class.
+    /// </summary>
+    /// <param name="connectionString">The connection string for the LiteDB database.</param>
+    /// <param name="configureModel">An action to configure the database model.</param>
     protected LiteDbContext(string connectionString, Action<ModelBuilder> configureModel)
     {
         _db = new LiteDatabase(connectionString);
@@ -32,6 +40,9 @@ public abstract class LiteDbContext : IDisposable
         }
     }
 
+    /// <summary>
+    /// Releases all resources used by the <see cref="LiteDbContext"/>.
+    /// </summary>
     public void Dispose()
     {
         _db.Dispose();

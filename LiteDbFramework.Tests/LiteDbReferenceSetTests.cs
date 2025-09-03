@@ -5,6 +5,7 @@ public class LiteDbReferenceSetTests
     public class Parent
     {
         [BsonId]
+        [UsedImplicitly]
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Name { get; set; } = string.Empty;
     }
@@ -30,6 +31,7 @@ public class LiteDbReferenceSetTests
     public class Room
     {
         [BsonId]
+        [UsedImplicitly]
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Number { get; set; }
     }
@@ -43,10 +45,10 @@ public class LiteDbReferenceSetTests
 
         private static void ConfigureModel(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Parent>(col => col.EnsureIndex(x => x.Id));
-            modelBuilder.Entity<Child>(col => col.EnsureIndex(x => x.Id));
-            modelBuilder.Entity<Building>(col => col.EnsureIndex(x => x.Id));
-            modelBuilder.Entity<Room>(col => col.EnsureIndex(x => x.Id));
+            modelBuilder.Entity<Parent>();
+            modelBuilder.Entity<Child>();
+            modelBuilder.Entity<Building>();
+            modelBuilder.Entity<Room>();
         }
     }
 
