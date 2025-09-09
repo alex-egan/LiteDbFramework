@@ -1,3 +1,5 @@
+using System.Linq.Expressions;
+
 namespace LiteDbFramework;
 
 /// <summary>
@@ -25,6 +27,13 @@ public class LiteDbSet<T>(LiteDatabase db) where T : class
     /// </summary>
     /// <returns>An IEnumerable of all entities.</returns>
     public IEnumerable<T> FindAll() => _collection.FindAll();
+
+    /// <summary>
+    /// Retrieves all entities in the collection that satisfy the specified condition
+    /// </summary>
+    /// <param name="predicate">The condition to be met</param>
+    /// <returns>An IEnumerable of all matching entities</returns>
+    public IEnumerable<T> Find(Expression<Func<T, bool>> predicate) => _collection.Find(predicate);
 
     /// <summary>
     /// Finds an entity by its ID.
