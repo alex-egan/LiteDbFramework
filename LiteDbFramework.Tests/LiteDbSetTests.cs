@@ -167,6 +167,24 @@ public class LiteDbSetTests
     }
 
     [Fact]
+    public void Find_ShouldReturnSuccess()
+    {
+        string path = Path.GetTempFileName();
+
+        using (LiteDatabase liteDb = new(path))
+        {
+            ILiteCollection<Person> people = liteDb.GetCollection<Person>("Person");
+            people.Insert(new Person { Name = "Person 1" });
+            people.Insert(new Person { Name = "Person 2" });
+        }
+
+        using DbContext context = new(path);
+        IEnumerable<Person> results = context.People.Find(p => p.Name == "Person 1");
+
+        Assert.Single(results);
+    }
+
+    [Fact]
     public void QueryRecord_WithValidInput_ShouldReturnRecord()
     {
         string path = Path.GetTempFileName();

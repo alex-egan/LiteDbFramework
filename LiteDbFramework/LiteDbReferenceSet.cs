@@ -1,4 +1,6 @@
-﻿namespace LiteDbFramework;
+﻿using System.Linq.Expressions;
+
+namespace LiteDbFramework;
 
 /// <summary>
 /// Represents a set of entities in a LiteDB collection with included references.
@@ -30,6 +32,13 @@ public class LiteDbReferenceSet<T>
     /// </summary>
     /// <returns>An IEnumerable of all entities.</returns>
     public IEnumerable<T> FindAll() => _collection.FindAll();
+
+    /// <summary>
+    /// Retrieves all entities in the collection that satisfy the specified condition, including references
+    /// </summary>
+    /// <param name="predicate">The condition to be met</param>
+    /// <returns>An IEnumerable of all matching entities</returns>
+    public IEnumerable<T> Find(Expression<Func<T, bool>> predicate) => _collection.Find(predicate);
 
     /// <summary>
     /// Finds an entity by its ID, including references.

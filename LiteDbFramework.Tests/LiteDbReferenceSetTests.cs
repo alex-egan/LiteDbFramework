@@ -126,6 +126,35 @@ public class LiteDbReferenceSetTests
     }
 
     [Fact]
+    public void FindWithReference_ShouldReturnSuccess()
+    {
+        string path = Path.GetTempFileName();
+        Parent parent1 = new() { Name = "Parent 1" };
+        Child child1 = new() { ParentReference = parent1 };
+        Parent parent2 = new() { Name = "Parent 2" };
+        Child child2 = new() { ParentReference = parent2 };
+
+        using (LiteDatabase liteDb = new(path))
+        {
+            ILiteCollection<Parent> parents = liteDb.GetCollection<Parent>("Parent");
+            ILiteCollection<Child> children = liteDb.GetCollection<Child>("Child");
+            parents.Insert(parent1);
+            children.Insert(child1);
+            parents.Insert(parent2);
+            children.Insert(child2);
+        }
+
+        using DbContext context = new(path);
+        List<Child> result = [.. context.Children.WithReferences.Find(p => p.ParentReference.Name == "Parent 1")];
+
+        Assert.NotNull(result);
+        Assert.Single(result);
+        List<string> expectedNames = [parent1.Name];
+        List<string> actualNames = result.ConvertAll(r => r.ParentReference.Name);
+        Assert.True(expectedNames.Order().SequenceEqual(actualNames.Order()));
+    }
+
+    [Fact]
     public void InsertRecordWithListReference_WithValidInput_ShouldReturnSuccess()
     {
         string path = Path.GetTempFileName();
